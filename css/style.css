@@ -207,6 +207,7 @@ header .intro-text {
 }
 ul.cat li {
 	display: inline-block;
+	margin-bottom: 26px;
 }
 ol.type li {
 	display: inline-block;

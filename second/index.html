@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jquery-1.12.4.min.js"></script>
+
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+        body{
+            background: url("images/1.jpg") center 800px;
+            background-size: cover;
+        }
+        .onep{
+            position: relative;
+            margin-top: 44px;
+            text-align: center;
+            font-size: 30px;
+            font-weight: 900;
+            color: #fff;
+            font-family: "华文行楷";
+        }
+        .twop {
+            width: 220px;
+            /*height: 200px;*/
+            text-align: center;
+            font-size: 30px;
+            font-weight: 900;
+            color: skyblue;
+            font-family: "华文行楷";
+
+            position: absolute;
+            top: 100px;
+            right:50px;
+        }
+        .box {
+            width: 240px;
+            height: 240px;
+            margin: 0 auto;
+            position: relative;
+            top: 70px;
+        }
+        img {
+            position: absolute;
+            position:absolute;
+            top:0;
+            left:0;
+            opacity: 0.8;
+
+
+        }
+        marquee {
+            width: 340px;
+        }
+
+        .box{
+            position:relative;
+
+            transform-style:preserve-3d;/*3d环境*/
+            animation:play 10s linear infinite;
+            /*presentation: 1000;*/
+
+        }
+        @keyframes play{
+            from{transform:rotateY(0deg);}
+            to{transform:rotateY(360deg);}
+        }
+        body {
+            perspective: 1200px;
+        }
+    </style>
+</head>
+<body>
+    <p class="onep">
+        <!--css3制作动画的效果-->
+        <!--behavior：设置滚动的方式，值可以是scroll（连续滚动）slide（滑动一次）alternate（来回滚动）-->
+        <!--direction：设置方向，默认向左-->
+        <marquee behavior="alternate" direction="">时光不老，我们不散</marquee></p>
+    <div class="box">
+        <img src="images/1.png" alt=""/>
+        <img src="images/2.png" alt=""/>
+        <img src="images/3.png" alt=""/>
+        <img src="images/4.png" alt=""/>
+        <img src="images/5.png" alt=""/>
+        <img src="images/6.png" alt=""/>
+    </div>
+    <p class="twop"></p>
+    <script>
+
+//        入口函数
+        $(function(){
+//1、飘动的雪花=================================================================
+
+//            设计计时器
+               setInterval(function(){
+                //获取雪花的大小
+                var snowFlakeSize =10 + Math.random()*20;
+
+//              每一秒创建50个i标签，添加雪花的字样
+                var $i = $("<i>&#10052</i>");
+//              $i.html("&#10052");
+
+//              i标签的位置是随机的,设置为定位absolute的定位，为此，要获得当前的页面的宽高，计算i的随机的和y(和left);
+                var width = $("body").width();            //获取到body的宽
+                var height = $(window).height();          //获取到body的高
+                   var x = Math.floor(Math.random()*width);  //得到雪花的随机left
+                var y = Math.floor(Math.random()*height);
+                startOpacity=0.5+Math.random();           //雪花的透明度是随机的
+                //将创建出来的i标签添加进body里面
+                $i.appendTo("body");
+                //设置雪花的样式
+                $i.css({
+                    'font-size':snowFlakeSize,//雪花字体大小（可变）
+                    fontStyle:"normal",
+                    position:"absolute",
+                    top:20,
+                    left:x,
+                    color:"#fff",
+                    opacity:startOpacity
+                });
+                //设置雪花的动画效果
+                $i.animate({
+                    top:height-100,
+                    opacity:0.2
+                },7000,'linear',function(){
+                    $i.remove();//雪花飘到等于body的高度的时候就移除他
+                })
+                //计时器结束
+            },100);
+
+
+
+
+
+//2、图片的旋转=================================================
+//            var index = 0;   //记录数据
+            var deg = 360/$(".box img").size();  //size()表示的是对象中元素的个数
+            $(".box img").each(function(index){
+                $(this).css({
+                    "transform":"rotateY("+deg*index+"deg) translateZ(300px)"
+                });
+            });
+
+//3、打印机=======================================================================
+    var str = "能够遇见你是我最大的幸运，有了你生活变得丰富多彩，有了你，世界变得如此迷人；你是我的世界，我的世界是你，对我来说，不是在最美好的时光遇见了你，而是遇见你后都是最美好的时光！";
+        //页面加载时的事件
+
+                //开启定时器
+                var index = 0;
+                 var timeId = setInterval(function(){
+                    //获取到每一个字
+                     var strWord = str[index];
+                     if(strWord!=undefined) {   //如果获取到的值不为为undefined
+                         //获取到.twop里面的内容
+                         var oldWord = $(".twop").html();
+                         //将新获取到的字符串进行拼接
+                         oldWord += strWord;
+                         //把新的值设置回去
+                         $(".twop").html(oldWord);
+                         index++;
+                     }else {
+                        clearInterval(timeId);
+                     }
+                },300);
+
+
+
+
+        //入口函数的结束
+        })
+    </script>
+</body>
+
+</html>
+
+<!--需求-->
+<!--1、一张大的背景图-->
+<!--2、飘动的雪花-->
+<!--3、移动的“时光不老，我们不散”的字样-->
+<!--4、旋转的爱心图-->
+<!--5、打印机似的的“能够遇见你是我最大的幸运，有了你生活变得丰富多彩，有了你，世界变得如此迷人；你是我的世界，我的世界是你，对我来说，不是在最美好的时光遇见了你，而是遇见你后都是最美好的时光！”字样-->
